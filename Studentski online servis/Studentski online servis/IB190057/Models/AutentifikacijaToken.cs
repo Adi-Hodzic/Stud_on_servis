@@ -14,7 +14,7 @@ namespace Studentski_online_servis.IB190057.Models
         public string Vrijednost { get; set; }
         [ForeignKey(nameof(KorisnickiNalog))]
         public int KorisnickiNalogId { get; set; }
-        public virtual KorisnickiNalog KorisnickiNalog { get; set; }
+        public KorisnickiNalog KorisnickiNalog { get; set; }
         public DateTime VrijemeEvidentiranja { get; set; }
         public string IP_Adresa { get; set; }
     }

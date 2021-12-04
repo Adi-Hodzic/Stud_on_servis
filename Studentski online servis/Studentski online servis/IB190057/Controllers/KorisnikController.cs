@@ -25,7 +25,9 @@ namespace Studentski_online_servis.IB190057.Controllers
         public class KorisnikVM
         {
             public string Ime { get; set; }
+            public string KorisnickoIme { get; set; }
             public string Prezime { get; set; }
+            public string Password { get; set; }
             public string Vrsta_Korisnika { get; set; }
             public DateTime DatumRodjenja { get; set; }
             public DateTime DatumPrijave { get; set; }
@@ -54,7 +56,8 @@ namespace Studentski_online_servis.IB190057.Controllers
             noviKorisnik.Vrsta_Korisnika = vrsta;
             noviKorisnik.DatumRodjenja = NoviKorisnik.DatumRodjenja;
             noviKorisnik.DatumPrijave = NoviKorisnik.DatumPrijave;
-
+            noviKorisnik.KorisnickoIme = NoviKorisnik.KorisnickoIme;
+            noviKorisnik.Lozinka = NoviKorisnik.Password;
 
             dLWMS_Db.Korisnici.Add(noviKorisnik);
             dLWMS_Db.SaveChanges();
@@ -97,7 +100,6 @@ namespace Studentski_online_servis.IB190057.Controllers
                 return dLWMS_Db.Korisnici.Where(x => x.Ime.CompareTo(Ime) == 0 && x.Prezime.CompareTo(Prezime) == 0).ToList();
 
             return dLWMS_Db.Korisnici.ToList();
-
         }
     }
 

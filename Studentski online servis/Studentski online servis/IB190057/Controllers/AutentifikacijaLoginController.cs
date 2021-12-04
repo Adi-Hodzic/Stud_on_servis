@@ -14,7 +14,11 @@ namespace Studentski_online_servis.IB190057.Controllers
     [Route("[controller]/[action]")]
     public class AutentifikacijaLoginController : ControllerBase
     {
-        private DLWMS_dbContext _dbContext = new DLWMS_dbContext();
+        private DLWMS_dbContext _dbContext;
+        public AutentifikacijaLoginController(DLWMS_dbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
         public class AutentifikacijaLoginPostVM
         {
             public string Username { get; set; }
@@ -32,7 +36,7 @@ namespace Studentski_online_servis.IB190057.Controllers
         [HttpPost]
         public IActionResult Login([FromBody] AutentifikacijaLoginPostVM x)
         {
-            var k = _dbContext.Korisnici.SingleOrDefault(s => s.KorisnickoIme == x.Username && s.Lozinka == x.Password);
+            var k = _dbContext.Korisnici.Where(s => s.KorisnickoIme == x.Username && s.Lozinka == x.Password).SingleOrDefault();
             if (k == null)
                 return Unauthorized();
 

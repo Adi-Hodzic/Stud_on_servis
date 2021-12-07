@@ -23,6 +23,7 @@ namespace Studentski_online_servis.IB190057.Controllers
         {
             public string Username { get; set; }
             public string Password { get; set; }
+            public int Fakultet_S { get; set; }
         }
         public class AutentifikcijaLoginResultVM
         {
@@ -31,38 +32,41 @@ namespace Studentski_online_servis.IB190057.Controllers
             public string Username { get; set; }
             public string Ime { get; set; }
             public string Prezime { get; set; }
+            public string Korisnik { get; set; }
         }
 
         [HttpPost]
-        public IActionResult Login([FromBody] AutentifikacijaLoginPostVM x)
+        public string Login([FromBody] AutentifikacijaLoginPostVM x)
         {
-            var k = _dbContext.Korisnici.Where(s => s.KorisnickoIme == x.Username && s.Lozinka == x.Password).SingleOrDefault();
+            Korisnik k = _dbContext.Korisnici.Where(s => s.KorisnickoIme == x.Username && s.Lozinka == x.Password && s.Fakultet.ID == x.Fakultet_S).SingleOrDefault();
             if (k == null)
-                return Unauthorized();
-
+                return $"GRESKA";
+            string p;
+            if (k.Vrsta_Korisnika == VrstaKorisnika.Student)
+                p = "student";
+            else if (k.Vrsta_Korisnika == VrstaKorisnika.Profesor)
+                p = "profesor";
+            else
+                p = "referent";
             string tokenString = TokenGenerator.Generate(5);
             _dbContext.Add(new AutentifikacijaToken
             {
                 KorisnickiNalogId = k.ID,
                 VrijemeEvidentiranja = DateTime.Now,
-                Vrijednost = tokenString
+                Vrijednost = tokenString,
+                IP_Adresa="1.2.3.4"
             });
             _dbContext.SaveChanges();
-            return Ok(new AutentifikcijaLoginResultVM
-            {
-                Poruka = "Ispravan login",
-                TokenString = tokenString,
-                Username = k.KorisnickoIme,
-                Ime = k.Ime,
-                Prezime = k.Prezime
-            });
+
+           
+            return $"{tokenString} {p}";
         }
 
 
         [HttpDelete]
         public IActionResult Logout()
         {
-            KorisnickiNalog k = HttpContext.GetKorisnikOfAuthToken();
+            AutentifikacijaToken k = HttpContext.GetKorisnikOfAuthToken();
             if (k != null)
             {
                 _dbContext.Remove(k);

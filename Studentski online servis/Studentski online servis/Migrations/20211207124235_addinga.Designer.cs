@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Studentski_online_servis.Data;
 
 namespace Studentski_online_servis.Migrations
 {
     [DbContext(typeof(DLWMS_dbContext))]
-    partial class DLWMS_dbContextModelSnapshot : ModelSnapshot
+    [Migration("20211207124235_addinga")]
+    partial class addinga
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,7 +28,7 @@ namespace Studentski_online_servis.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("IP_Adresa")
+                    b.Property<string>("IP_adresa")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("KorisnickiNalogId")

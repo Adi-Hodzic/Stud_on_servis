@@ -11,7 +11,8 @@ namespace Studentski_online_servis.Data
     {
         public DbSet<Korisnik> Korisnici { get; set; }
         public DbSet<AutentifikacijaToken> AutentifikacijaToken { set; get; }
-        public DLWMS_dbContext(DbContextOptions options) : base(options){}
-       
+        public DbSet<Fakultet> Fakulteti { set; get; }
+        public DLWMS_dbContext(DbContextOptions options) : base(options) { }
+
     }
 }

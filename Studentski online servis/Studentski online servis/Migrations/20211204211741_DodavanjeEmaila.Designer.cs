@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Studentski_online_servis.Data;
 
 namespace Studentski_online_servis.Migrations
 {
     [DbContext(typeof(DLWMS_dbContext))]
-    partial class DLWMS_dbContextModelSnapshot : ModelSnapshot
+    [Migration("20211204211741_DodavanjeEmaila")]
+    partial class DodavanjeEmaila
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,24 +45,6 @@ namespace Studentski_online_servis.Migrations
                     b.HasIndex("KorisnickiNalogId");
 
                     b.ToTable("AutentifikacijaToken");
-                });
-
-            modelBuilder.Entity("Studentski_online_servis.IB190057.Models.Fakultet", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Grad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Naziv")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Fakulteti");
                 });
 
             modelBuilder.Entity("Studentski_online_servis.IB190057.Models.KorisnickiNalog", b =>
@@ -100,9 +84,6 @@ namespace Studentski_online_servis.Migrations
                     b.Property<DateTime>("DatumRodjenja")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FakultetID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Ime")
                         .HasColumnType("nvarchar(max)");
 
@@ -115,8 +96,6 @@ namespace Studentski_online_servis.Migrations
                     b.Property<int>("Vrsta_Korisnika")
                         .HasColumnType("int");
 
-                    b.HasIndex("FakultetID");
-
                     b.HasDiscriminator().HasValue("Korisnik");
                 });
 
@@ -125,15 +104,6 @@ namespace Studentski_online_servis.Migrations
                     b.HasOne("Studentski_online_servis.IB190057.Models.KorisnickiNalog", "KorisnickiNalog")
                         .WithMany()
                         .HasForeignKey("KorisnickiNalogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Studentski_online_servis.IB190057.Models.Korisnik", b =>
-                {
-                    b.HasOne("Studentski_online_servis.IB190057.Models.Fakultet", "Fakultet")
-                        .WithMany()
-                        .HasForeignKey("FakultetID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -58,7 +58,7 @@ namespace Studentski_online_servis.IB190057.Controllers
             noviKorisnik.DatumPrijave = NoviKorisnik.DatumPrijave;
             noviKorisnik.KorisnickoIme = NoviKorisnik.KorisnickoIme;
             noviKorisnik.Lozinka = NoviKorisnik.Password;
-
+            noviKorisnik.FakultetID = 1;
             dLWMS_Db.Korisnici.Add(noviKorisnik);
             dLWMS_Db.SaveChanges();
             return $"{_vrsta} uspjesno dodat";
@@ -77,29 +77,29 @@ namespace Studentski_online_servis.IB190057.Controllers
 
 
                 if (Ime != null && Prezime != null)
-                    return dLWMS_Db.Korisnici.Where(x =>
+                    return dLWMS_Db.Korisnici.Include(x=>x.Fakultet).Where(x =>
                     (x.Vrsta_Korisnika == NovaVrsta && x.Ime.CompareTo(Ime) == 0 && x.Prezime.CompareTo(Prezime) == 0)).ToList();
 
                 if (Ime == null && Prezime != null)
-                    return dLWMS_Db.Korisnici.Where(x => x.Vrsta_Korisnika == NovaVrsta && x.Prezime.CompareTo(Prezime) == 0).ToList();
+                    return dLWMS_Db.Korisnici.Include(x => x.Fakultet).Where(x => x.Vrsta_Korisnika == NovaVrsta && x.Prezime.CompareTo(Prezime) == 0).ToList();
 
                 if (Ime == null && Prezime == null)
-                    return dLWMS_Db.Korisnici.Where(x => x.Vrsta_Korisnika == NovaVrsta).ToList();
+                    return dLWMS_Db.Korisnici.Include(x => x.Fakultet).Where(x => x.Vrsta_Korisnika == NovaVrsta).ToList();
 
                 if (Ime != null && Prezime == null)
-                    return dLWMS_Db.Korisnici.Where(x => x.Vrsta_Korisnika == NovaVrsta && x.Ime.CompareTo(Ime) == 0).ToList();
+                    return dLWMS_Db.Korisnici.Include(x => x.Fakultet).Where(x => x.Vrsta_Korisnika == NovaVrsta && x.Ime.CompareTo(Ime) == 0).ToList();
             }
 
             if (Ime == null && Prezime != null)
-                return dLWMS_Db.Korisnici.Where(x => x.Prezime.CompareTo(Prezime) == 0).ToList();
+                return dLWMS_Db.Korisnici.Include(x => x.Fakultet).Where(x => x.Prezime.CompareTo(Prezime) == 0).ToList();
 
             if (Ime != null && Prezime == null)
-                return dLWMS_Db.Korisnici.Where(x => x.Ime.CompareTo(Ime) == 0).ToList();
+                return dLWMS_Db.Korisnici.Include(x => x.Fakultet).Where(x => x.Ime.CompareTo(Ime) == 0).ToList();
 
             if (Ime != null && Prezime != null)
-                return dLWMS_Db.Korisnici.Where(x => x.Ime.CompareTo(Ime) == 0 && x.Prezime.CompareTo(Prezime) == 0).ToList();
+                return dLWMS_Db.Korisnici.Include(x => x.Fakultet).Where(x => x.Ime.CompareTo(Ime) == 0 && x.Prezime.CompareTo(Prezime) == 0).ToList();
 
-            return dLWMS_Db.Korisnici.ToList();
+            return dLWMS_Db.Korisnici.Include(x => x.Fakultet).ToList();
         }
     }
 
